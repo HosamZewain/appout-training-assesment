@@ -1,0 +1,87 @@
+// This is your Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Application {
+  id                    String             @id @default(uuid())
+  fullName              String
+  mobile                String             @unique
+  email                 String             @unique
+  residenceCity         String
+  residenceGovernorate  String
+  canAttendTanta        Boolean
+  status                String             @default("NEW")  // Values: NEW, REVIEWED, SHORTLISTED, REJECTED, CONTACTED
+  adminNotes            String?
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  assessmentAttempt     AssessmentAttempt?
+
+  @@index([email])
+  @@index([mobile])
+}
+
+
+model AssessmentAttempt {
+  id             String      @id @default(uuid())
+  applicationId  String      @unique
+  application    Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  startedAt      DateTime    @default(now())
+  submittedAt    DateTime?
+  totalScore     Float       @default(0)
+  sectionScores  String      @default("{}")  // JSON string
+  isCompleted    Boolean     @default(false)
+  answers        Answer[]
+}
+
+model Question {
+  id          String           @id @default(uuid())
+  category    String           // Values: HTML, CSS, JAVASCRIPT, REACT, ANGULAR, NODE, MONGODB, MYSQL
+  text        String
+  type        String           // Values: MCQ, SHORT_ANSWER
+  difficulty  String           // Values: EASY, MEDIUM, HARD
+  points      Int
+  orderIndex  Int
+  createdAt   DateTime         @default(now())
+  options     Option[]
+  answers     Answer[]
+
+  @@index([category])
+}
+
+model Option {
+  id         String   @id @default(uuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  text       String
+  isCorrect  Boolean
+  orderIndex Int
+}
+
+model Answer {
+  id               String            @id @default(uuid())
+  attemptId        String
+  attempt          AssessmentAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId       String
+  question         Question          @relation(fields: [questionId], references: [id])
+  selectedOptionId String?
+  textAnswer       String?
+  isCorrect        Boolean?
+  score            Float             @default(0)
+
+  @@index([attemptId])
+  @@index([questionId])
+}

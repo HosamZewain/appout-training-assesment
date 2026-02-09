@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/* 
+ * Custom Theme Variables
+ * These define the color palette for the application.
+ */
+:root {
+  /* Background Colors */
+  --color-background: #020617;
+  --color-foreground: #f8fafc;
+
+  /* Card Colors */
+  --color-card: #0f172a;
+  --color-card-foreground: #f8fafc;
+
+  /* Primary Colors */
+  --color-primary: #6366f1;
+  --color-primary-foreground: #ffffff;
+
+  /* Secondary Colors */
+  --color-secondary: #1e293b;
+  --color-secondary-foreground: #f8fafc;
+
+  /* Muted Colors */
+  --color-muted: #1e293b;
+  --color-muted-foreground: #94a3b8;
+
+  /* Accent Colors */
+  --color-accent: #1e293b;
+  --color-accent-foreground: #f8fafc;
+
+  /* Destructive Colors */
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+
+  /* Border & Input */
+  --color-border: #334155;
+  --color-input: #334155;
+  --color-ring: #6366f1;
+
+  /* Popover */
+  --color-popover: #0f172a;
+  --color-popover-foreground: #f8fafc;
+
+  /* Radius */
+  --radius: 0.5rem;
+}
+
+/* Base Styles */
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Custom utility mappings via Tailwind v4 @theme */
+@theme {
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-card: var(--color-card);
+  --color-card-foreground: var(--color-card-foreground);
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-foreground);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-foreground: var(--color-secondary-foreground);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-foreground);
+  --color-destructive: var(--color-destructive);
+  --color-destructive-foreground: var(--color-destructive-foreground);
+  --color-border: var(--color-border);
+  --color-input: var(--color-input);
+  --color-ring: var(--color-ring);
+  --color-popover: var(--color-popover);
+  --color-popover-foreground: var(--color-popover-foreground);
+}
