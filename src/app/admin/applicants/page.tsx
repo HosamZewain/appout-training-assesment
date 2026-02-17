@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Search, Filter, ChevronRight, User } from 'lucide-react';
 
 interface Applicant {
     id: string;
@@ -18,6 +20,14 @@ interface Applicant {
         isCompleted: boolean;
     };
 }
+
+const statusColors: Record<string, { bg: string; text: string; dot: string }> = {
+    NEW: { bg: 'bg-blue-500/10', text: 'text-blue-400', dot: 'bg-blue-400' },
+    REVIEWED: { bg: 'bg-yellow-500/10', text: 'text-yellow-400', dot: 'bg-yellow-400' },
+    SHORTLISTED: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', dot: 'bg-emerald-400' },
+    REJECTED: { bg: 'bg-red-500/10', text: 'text-red-400', dot: 'bg-red-400' },
+    CONTACTED: { bg: 'bg-purple-500/10', text: 'text-purple-400', dot: 'bg-purple-400' },
+};
 
 export default function ApplicantsListPage() {
     const { status: authStatus } = useSession();
@@ -65,43 +75,53 @@ export default function ApplicantsListPage() {
 
     if (authStatus === 'loading' || loading) {
         return (
-            <div className="container py-20 flex items-center justify-center">
-                <div className="spinner" style={{ width: '40px', height: '40px' }}></div>
+            <div className="flex items-center justify-center min-h-[60vh]">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin" />
+                    <p className="text-slate-400">Loading applicants...</p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="container py-8">
-            <div className="mb-8 flex justify-between items-center">
-                <div>
-                    <h1 className="text-4xl font-bold mb-2">Applicants</h1>
-                    <p className="text-secondary">Manage and review all applicants</p>
-                </div>
-                <Link href="/admin/dashboard" className="btn btn-secondary">
-                    ← Back to Dashboard
-                </Link>
-            </div>
+        <div className="space-y-6">
+            {/* Header */}
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+            >
+                <h1 className="text-3xl font-bold text-white">Applicants</h1>
+                <p className="text-slate-400 mt-1">Manage and review all training applicants</p>
+            </motion.div>
 
             {/* Filters */}
-            <div className="glass-card mb-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label className="input-label">Search</label>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-4 backdrop-blur-xl"
+            >
+                <div className="flex flex-col md:flex-row gap-4">
+                    {/* Search */}
+                    <div className="flex-1 relative">
+                        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                         <input
                             type="text"
-                            className="input-field"
                             placeholder="Search by name, email, or mobile..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
+                            className="w-full pl-11 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all"
                         />
                     </div>
-                    <div>
-                        <label className="input-label">Status</label>
+
+                    {/* Status Filter */}
+                    <div className="relative">
+                        <Filter size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                         <select
-                            className="select-field"
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
+                            className="pl-11 pr-10 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all cursor-pointer min-w-[180px]"
                         >
                             <option value="">All Statuses</option>
                             <option value="NEW">New</option>
@@ -112,71 +132,130 @@ export default function ApplicantsListPage() {
                         </select>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
-            {/* Applicants Table */}
-            <div className="glass-card">
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead>
-                            <tr className="border-b border-gray-700">
-                                <th className="text-left p-4">Name</th>
-                                <th className="text-left p-4">Email</th>
-                                <th className="text-left p-4">Mobile</th>
-                                <th className="text-left p-4">City</th>
-                                <th className="text-left p-4">Score</th>
-                                <th className="text-left p-4">Status</th>
-                                <th className="text-left p-4">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {applicants.length === 0 ? (
-                                <tr>
-                                    <td colSpan={7} className="p-8 text-center text-secondary">
-                                        No applicants found
-                                    </td>
-                                </tr>
-                            ) : (
-                                applicants.map((applicant) => (
-                                    <tr key={applicant.id} className="border-b border-gray-800 hover:bg-gray-800 hover:bg-opacity-30">
-                                        <td className="p-4">{applicant.fullName}</td>
-                                        <td className="p-4 text-sm text-secondary">{applicant.email}</td>
-                                        <td className="p-4 text-sm text-secondary">{applicant.mobile}</td>
-                                        <td className="p-4 text-sm">{applicant.residenceCity}</td>
-                                        <td className="p-4">
-                                            {applicant.assessmentAttempt?.isCompleted ? (
-                                                <span className="font-semibold">
-                                                    {applicant.assessmentAttempt.totalScore.toFixed(1)}%
+            {/* Results Count */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="flex items-center justify-between"
+            >
+                <p className="text-sm text-slate-500">
+                    Showing <span className="text-white font-medium">{applicants.length}</span> applicants
+                </p>
+            </motion.div>
+
+            {/* Applicants List */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl backdrop-blur-xl overflow-hidden"
+            >
+                {applicants.length === 0 ? (
+                    <div className="p-12 text-center">
+                        <div className="w-16 h-16 mx-auto mb-4 bg-slate-800 rounded-full flex items-center justify-center">
+                            <User size={32} className="text-slate-600" />
+                        </div>
+                        <p className="text-slate-400">No applicants found</p>
+                        <p className="text-slate-600 text-sm mt-1">Try adjusting your search or filters</p>
+                    </div>
+                ) : (
+                    <div className="divide-y divide-slate-800/50">
+                        {applicants.map((applicant, idx) => {
+                            const statusStyle = statusColors[applicant.status] || statusColors.NEW;
+                            return (
+                                <motion.div
+                                    key={applicant.id}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.05 * idx }}
+                                >
+                                    <Link
+                                        href={`/admin/applicants/${applicant.id}`}
+                                        className="flex items-center gap-4 p-4 hover:bg-slate-800/30 transition-colors group"
+                                    >
+                                        {/* Avatar */}
+                                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg shrink-0">
+                                            {applicant.fullName.charAt(0).toUpperCase()}
+                                        </div>
+
+                                        {/* Main Info */}
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-3">
+                                                <h3 className="font-medium text-white group-hover:text-indigo-400 transition-colors truncate">
+                                                    {applicant.fullName}
+                                                </h3>
+                                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${statusStyle.bg} ${statusStyle.text}`}>
+                                                    <span className={`w-1.5 h-1.5 rounded-full ${statusStyle.dot}`} />
+                                                    {applicant.status}
                                                 </span>
+                                            </div>
+                                            <div className="flex items-center gap-4 mt-1 text-sm text-slate-500">
+                                                <span className="truncate">{applicant.email}</span>
+                                                <span className="hidden sm:inline">•</span>
+                                                <span className="hidden sm:inline">{applicant.mobile}</span>
+                                            </div>
+                                        </div>
+
+                                        {/* City */}
+                                        <div className="hidden md:block text-sm text-slate-400 shrink-0 w-28 text-center">
+                                            {applicant.residenceCity}
+                                        </div>
+
+                                        {/* Score */}
+                                        <div className="shrink-0 w-20 text-center">
+                                            {applicant.assessmentAttempt?.isCompleted ? (
+                                                <div className="flex items-center justify-center gap-2">
+                                                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center relative">
+                                                        <svg className="w-10 h-10 -rotate-90">
+                                                            <circle
+                                                                cx="20"
+                                                                cy="20"
+                                                                r="16"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                strokeWidth="3"
+                                                                className="text-slate-700"
+                                                            />
+                                                            <circle
+                                                                cx="20"
+                                                                cy="20"
+                                                                r="16"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                strokeWidth="3"
+                                                                strokeDasharray={100}
+                                                                strokeDashoffset={100 - applicant.assessmentAttempt.totalScore}
+                                                                strokeLinecap="round"
+                                                                className={
+                                                                    applicant.assessmentAttempt.totalScore >= 80 ? 'text-emerald-500' :
+                                                                        applicant.assessmentAttempt.totalScore >= 60 ? 'text-indigo-500' :
+                                                                            applicant.assessmentAttempt.totalScore >= 40 ? 'text-yellow-500' :
+                                                                                'text-red-500'
+                                                                }
+                                                            />
+                                                        </svg>
+                                                        <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+                                                            {Math.round(applicant.assessmentAttempt.totalScore)}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             ) : (
-                                                <span className="text-secondary text-sm">Pending</span>
+                                                <span className="text-sm text-slate-600">Pending</span>
                                             )}
-                                        </td>
-                                        <td className="p-4">
-                                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${applicant.status === 'NEW' ? 'bg-blue-500 bg-opacity-20 text-blue-400' :
-                                                    applicant.status === 'REVIEWED' ? 'bg-yellow-500 bg-opacity-20 text-yellow-400' :
-                                                        applicant.status === 'SHORTLISTED' ? 'bg-green-500 bg-opacity-20 text-green-400' :
-                                                            applicant.status === 'REJECTED' ? 'bg-red-500 bg-opacity-20 text-red-400' :
-                                                                'bg-purple-500 bg-opacity-20 text-purple-400'
-                                                }`}>
-                                                {applicant.status}
-                                            </span>
-                                        </td>
-                                        <td className="p-4">
-                                            <Link
-                                                href={`/admin/applicants/${applicant.id}`}
-                                                className="text-sm text-accent hover:underline"
-                                            >
-                                                View Details →
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                        </div>
+
+                                        {/* Arrow */}
+                                        <ChevronRight size={20} className="text-slate-600 group-hover:text-indigo-400 transition-colors shrink-0" />
+                                    </Link>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                )}
+            </motion.div>
         </div>
     );
 }

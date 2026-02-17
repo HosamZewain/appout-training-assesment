@@ -56,8 +56,18 @@ export async function POST(request: NextRequest) {
         });
 
         return NextResponse.json({ id: application.id, message: 'Application created successfully' }, { status: 201 });
-    } catch (error) {
+    } catch (error: unknown) {
         console.error('Application creation error:', error);
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        const errorDetails = error instanceof Error ? error.stack : String(error);
+        console.error('Error details:', errorDetails);
+        return NextResponse.json(
+            {
+                error: 'Internal server error',
+                message: errorMessage,
+                ...(process.env.NODE_ENV !== 'production' && { stack: errorDetails }),
+            },
+            { status: 500 }
+        );
     }
 }
