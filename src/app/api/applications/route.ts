@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import path from 'path';
-import fs from 'fs';
 
 // Helper: wrap a promise with a timeout
 function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
@@ -24,15 +22,6 @@ export async function POST(request: NextRequest) {
         diagnostics.push(`DATABASE_URL=${dbUrl}`);
         diagnostics.push(`CWD=${process.cwd()}`);
         diagnostics.push(`NODE_ENV=${process.env.NODE_ENV || 'not set'}`);
-
-        // Check if the SQLite database file exists
-        if (dbUrl.startsWith('file:')) {
-            const dbPath = dbUrl.replace('file:', '').replace(/\?.*$/, '');
-            const resolvedPath = path.resolve(process.cwd(), dbPath);
-            const exists = fs.existsSync(resolvedPath);
-            diagnostics.push(`DB resolved path=${resolvedPath}`);
-            diagnostics.push(`DB file exists=${exists}`);
-        }
 
         const body = await request.json();
         const { fullName, mobile, email, residenceCity, residenceGovernorate, canAttendTanta } = body;
