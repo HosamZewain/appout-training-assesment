@@ -19,12 +19,47 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Assessment already submitted' }, { status: 400 });
         }
 
+        // --- Security Validations ---
+
+        // 1. Validate answers format
+        if (!Array.isArray(answers)) {
+            return NextResponse.json({ error: 'Invalid answers format' }, { status: 400 });
+        }
+
+        // 2. Time Window Validation (2 hours + 15 minutes buffer)
+        const MAX_DURATION_MS = (2 * 60 + 15) * 60 * 1000; // 2h 15m
+        const timeElapsed = Date.now() - new Date(attempt.startedAt).getTime();
+
+        if (timeElapsed > MAX_DURATION_MS) {
+            // Start time is too old. We might still accept it but mark it, 
+            // or reject it. For strict security, we reject.
+            return NextResponse.json({
+                error: 'Assessment time limit exceeded. Submission rejected.'
+            }, { status: 403 });
+        }
+
+        // 3. Duplicate Answer Check
+        const questionIdsSeen = new Set<string>();
+        for (const ans of answers) {
+            if (!ans.questionId) continue;
+            if (questionIdsSeen.has(ans.questionId)) {
+                return NextResponse.json({ error: 'Duplicate answer for question' }, { status: 400 });
+            }
+            questionIdsSeen.add(ans.questionId);
+        }
+
         // Fetch all questions to calculate scores
         const questions = await prisma.question.findMany({
             include: {
                 options: true
             }
         });
+
+        // 4. Answer Count Check
+        if (answers.length > questions.length) {
+            return NextResponse.json({ error: 'Too many answers submitted' }, { status: 400 });
+        }
+
 
         const sectionScores: Record<string, { score: number; total: number }> = {};
         let totalScore = 0;

@@ -55,7 +55,21 @@ export async function GET() {
             options: q.options ? [...q.options].sort(() => Math.random() - 0.5) : [],
         }));
 
-        return NextResponse.json(shuffledQuestions);
+        // Strip isCorrect from options before returning
+        const safeQuestions = shuffledQuestions.map(q => ({
+            id: q.id,
+            text: q.text,
+            type: q.type,
+            category: q.category,
+            // options is already sorted and shuffled, just need to project keys
+            options: q.options?.map(opt => ({
+                id: opt.id,
+                text: opt.text,
+                orderIndex: opt.orderIndex
+            })) || []
+        }));
+
+        return NextResponse.json(safeQuestions);
     } catch (error) {
         console.error('Error fetching questions:', error);
         return NextResponse.json({ error: 'Failed to fetch questions' }, { status: 500 });

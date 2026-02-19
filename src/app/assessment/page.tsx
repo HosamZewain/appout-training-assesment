@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Send, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Send, AlertCircle, Loader2, CheckCircle2, Timer } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { QuestionNavigator } from '@/components/ui/QuestionNavigator';
 import { ConfirmModal } from '@/components/ui/Modal';
@@ -26,6 +26,55 @@ export default function AssessmentPage() {
     const [submitError, setSubmitError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    const startTimeRef = useRef<number>(Date.now());
+
+    // Live elapsed time counter
+    useEffect(() => {
+        startTimeRef.current = Date.now();
+        const interval = setInterval(() => {
+            setElapsedSeconds(Math.floor((Date.now() - startTimeRef.current) / 1000));
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const formatTime = (totalSeconds: number) => {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+    // Prevent copying questions and answers
+    useEffect(() => {
+        const preventCopy = (e: ClipboardEvent) => {
+            e.preventDefault();
+        };
+        const preventContextMenu = (e: MouseEvent) => {
+            e.preventDefault();
+        };
+        const preventKeyShortcuts = (e: KeyboardEvent) => {
+            // Block Ctrl+C, Ctrl+A, Ctrl+X, Cmd+C, Cmd+A, Cmd+X
+            if ((e.ctrlKey || e.metaKey) && ['c', 'a', 'x'].includes(e.key.toLowerCase())) {
+                e.preventDefault();
+            }
+            // Block PrintScreen
+            if (e.key === 'PrintScreen') {
+                e.preventDefault();
+            }
+        };
+
+        document.addEventListener('copy', preventCopy);
+        document.addEventListener('cut', preventCopy);
+        document.addEventListener('contextmenu', preventContextMenu);
+        document.addEventListener('keydown', preventKeyShortcuts);
+
+        return () => {
+            document.removeEventListener('copy', preventCopy);
+            document.removeEventListener('cut', preventCopy);
+            document.removeEventListener('contextmenu', preventContextMenu);
+            document.removeEventListener('keydown', preventKeyShortcuts);
+        };
+    }, []);
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -138,7 +187,7 @@ export default function AssessmentPage() {
     const progress = (answeredCount / questions.length) * 100;
 
     return (
-        <div className="min-h-screen py-8 px-4 bg-background relative z-10 selection:bg-primary/30">
+        <div className="min-h-screen py-8 px-4 bg-background relative z-10 select-none" style={{ WebkitUserSelect: 'none', userSelect: 'none' }} onDragStart={(e) => e.preventDefault()}>
             <div className="container max-w-6xl mx-auto">
                 {/* Header */}
                 <header className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
@@ -146,18 +195,24 @@ export default function AssessmentPage() {
                         <h1 className="text-2xl font-bold text-foreground">Technical Assessment</h1>
                         <p className="text-muted-foreground text-sm">Application ID: {sessionStorage.getItem('applicationId')?.slice(0, 8)}...</p>
                     </div>
-                    <div className="flex items-center gap-4 bg-card p-3 rounded-xl border border-border mt-4 md:mt-0">
-                        <div className="text-right">
-                            <p className="text-sm font-medium text-primary">{answeredCount} / {questions.length}</p>
-                            <p className="text-xs text-muted-foreground">questions answered</p>
+                    <div className="flex items-center gap-4 mt-4 md:mt-0">
+                        <div className="flex items-center gap-2 bg-card px-4 py-3 rounded-xl border border-border">
+                            <Timer className="w-4 h-4 text-indigo-500" />
+                            <span className="text-sm font-mono font-semibold text-slate-700">{formatTime(elapsedSeconds)}</span>
                         </div>
-                        <div className="w-32 h-2 bg-slate-200 rounded-full overflow-hidden">
-                            <motion.div
-                                className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
-                                initial={{ width: 0 }}
-                                animate={{ width: `${progress}%` }}
-                                transition={{ duration: 0.5 }}
-                            />
+                        <div className="flex items-center gap-4 bg-card p-3 rounded-xl border border-border">
+                            <div className="text-right">
+                                <p className="text-sm font-medium text-primary">{answeredCount} / {questions.length}</p>
+                                <p className="text-xs text-muted-foreground">questions answered</p>
+                            </div>
+                            <div className="w-32 h-2 bg-slate-200 rounded-full overflow-hidden">
+                                <motion.div
+                                    className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${progress}%` }}
+                                    transition={{ duration: 0.5 }}
+                                />
+                            </div>
                         </div>
                     </div>
                 </header>

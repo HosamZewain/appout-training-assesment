@@ -4,19 +4,35 @@ import { prisma } from '@/lib/prisma';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { fullName, mobile, email, residenceCity, residenceGovernorate, canAttendTanta } = body;
+        let { fullName, mobile, email, residenceCity, residenceGovernorate, canAttendTanta } = body;
 
-        // Validation
-        if (!fullName || fullName.length < 3) {
-            return NextResponse.json({ error: 'Full name must be at least 3 characters' }, { status: 400 });
+        // --- Sanitization & Validation ---
+
+        // Trim inputs
+        fullName = fullName?.trim();
+        email = email?.trim().toLowerCase();
+        mobile = mobile?.trim();
+        residenceCity = residenceCity?.trim();
+        residenceGovernorate = residenceGovernorate?.trim();
+
+        if (!fullName || fullName.length < 3 || fullName.length > 100) {
+            return NextResponse.json({ error: 'Full name must be between 3 and 100 characters' }, { status: 400 });
         }
 
         if (!mobile || !/^01[0-9]{9}$/.test(mobile)) {
             return NextResponse.json({ error: 'Invalid mobile number' }, { status: 400 });
         }
 
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 100) {
             return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
+        }
+
+        if (!residenceCity || residenceCity.length < 2 || residenceCity.length > 50) {
+            return NextResponse.json({ error: 'City is required (2-50 chars)' }, { status: 400 });
+        }
+
+        if (!residenceGovernorate || residenceGovernorate.length < 2 || residenceGovernorate.length > 50) {
+            return NextResponse.json({ error: 'Governorate is required (2-50 chars)' }, { status: 400 });
         }
 
         // Check for duplicates

@@ -6,7 +6,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Mail, Phone, MapPin, Calendar, Check, X,
-    ChevronDown, ChevronUp, Save, ArrowLeft
+    ChevronDown, ChevronUp, Save, ArrowLeft, Timer
 } from 'lucide-react';
 import Link from 'next/link';
 import { ScoreRing } from '@/components/admin/ScoreRing';
@@ -25,6 +25,7 @@ interface ApplicantDetails {
     assessmentAttempt?: {
         totalScore: number;
         sectionScores: string;
+        startedAt: string;
         submittedAt: string | null;
         answers: Array<{
             question: {
@@ -314,6 +315,25 @@ export default function ApplicantDetailsPage() {
                                         size="lg"
                                         label="Overall Score"
                                     />
+                                    {/* Time Taken */}
+                                    {applicant.assessmentAttempt.startedAt && applicant.assessmentAttempt.submittedAt && (
+                                        <div className="flex flex-col items-center gap-1">
+                                            <div className="p-3 rounded-2xl bg-indigo-50">
+                                                <Timer className="w-8 h-8 text-indigo-500" />
+                                            </div>
+                                            <span className="text-2xl font-bold text-slate-800">
+                                                {(() => {
+                                                    const start = new Date(applicant.assessmentAttempt.startedAt).getTime();
+                                                    const end = new Date(applicant.assessmentAttempt.submittedAt).getTime();
+                                                    const diffMs = end - start;
+                                                    const minutes = Math.floor(diffMs / 60000);
+                                                    const seconds = Math.floor((diffMs % 60000) / 1000);
+                                                    return `${minutes}m ${seconds}s`;
+                                                })()}
+                                            </span>
+                                            <span className="text-sm text-slate-500">Time Taken</span>
+                                        </div>
+                                    )}
                                     <div className="flex-1 w-full">
                                         <h2 className="text-lg font-semibold text-slate-800 mb-4">Section Breakdown</h2>
                                         <div className="space-y-3">
