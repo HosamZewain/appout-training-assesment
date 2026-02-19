@@ -6,6 +6,7 @@ import { signOut } from 'next-auth/react';
 import {
     LayoutDashboard,
     Users,
+    HelpCircle,
     LogOut,
     ChevronLeft,
     ChevronRight
@@ -29,6 +30,11 @@ const navItems: NavItem[] = [
         href: '/admin/applicants',
         label: 'Applicants',
         icon: <Users size={20} />,
+    },
+    {
+        href: '/admin/questions',
+        label: 'Questions',
+        icon: <HelpCircle size={20} />,
     },
 ];
 
