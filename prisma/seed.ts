@@ -689,7 +689,23 @@ async function main() {
 
     // Create questions with options
     let orderIndex = 0;
+    let createdCount = 0;
+    let skippedCount = 0;
+
     for (const q of allQuestions) {
+        // Idempotency check: see if question already exists
+        const existingQuestion = await prisma.question.findFirst({
+            where: {
+                text: q.text,
+                category: q.category as any
+            }
+        });
+
+        if (existingQuestion) {
+            skippedCount++;
+            continue; // Skip creation
+        }
+
         const question = await prisma.question.create({
             data: {
                 category: q.category as any,
@@ -713,7 +729,13 @@ async function main() {
                 });
             }
         }
+        createdCount++;
     }
+
+    console.log(`✅ Seed process finished.`);
+    console.log(`   - Created: ${createdCount}`);
+    console.log(`   - Skipped (already existed): ${skippedCount}`);
+    console.log(`   - Total Processed: ${allQuestions.length}`);
 
     console.log(`✅ Created ${allQuestions.length} questions across 8 categories`);
     console.log('🎉 Seed completed successfully!');
