@@ -36,6 +36,11 @@ const navItems: NavItem[] = [
         label: 'Questions',
         icon: <HelpCircle size={20} />,
     },
+    {
+        href: '/admin/profile',
+        label: 'Profile',
+        icon: <Users size={20} />,
+    },
 ];
 
 export function Sidebar() {
