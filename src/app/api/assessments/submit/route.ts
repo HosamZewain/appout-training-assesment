@@ -40,8 +40,14 @@ export async function POST(request: NextRequest) {
             let score = 0;
             let isCorrect = null;
 
-            if (question.type === 'MCQ' && answer.selectedOptionId) {
-                const selectedOption = question.options.find(o => o.id === answer.selectedOptionId);
+            // The assessment page sends { questionId, answer } where answer is:
+            // - For MCQ: the selected option ID
+            // - For SHORT_ANSWER: the text answer
+            const selectedOptionId = question.type === 'MCQ' ? (answer.selectedOptionId || answer.answer) : null;
+            const textAnswer = question.type === 'SHORT_ANSWER' ? (answer.textAnswer || answer.answer) : null;
+
+            if (question.type === 'MCQ' && selectedOptionId) {
+                const selectedOption = question.options.find(o => o.id === selectedOptionId);
                 isCorrect = selectedOption?.isCorrect || false;
                 score = isCorrect ? question.points : 0;
             } else if (question.type === 'SHORT_ANSWER') {
@@ -54,8 +60,8 @@ export async function POST(request: NextRequest) {
                 data: {
                     attemptId: attempt.id,
                     questionId: question.id,
-                    selectedOptionId: answer.selectedOptionId || null,
-                    textAnswer: answer.textAnswer || null,
+                    selectedOptionId: selectedOptionId || null,
+                    textAnswer: textAnswer || null,
                     isCorrect,
                     score
                 }

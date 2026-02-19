@@ -25,7 +25,9 @@ export async function GET(
                             include: {
                                 question: {
                                     include: {
-                                        options: true,
+                                        options: {
+                                            orderBy: { orderIndex: 'asc' },
+                                        },
                                     },
                                 },
                             },

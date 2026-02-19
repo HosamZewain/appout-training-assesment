@@ -197,7 +197,7 @@ export default function AssessmentPage() {
                                                     key={option.id}
                                                     className={`
                                                         flex items-center p-4 rounded-xl border transition-all duration-200 cursor-pointer group
-                                                        ${answers[currentQuestion.id] === option.text
+                                                        ${answers[currentQuestion.id] === option.id
                                                             ? 'bg-indigo-500/10 border-indigo-500 ring-1 ring-indigo-500/50'
                                                             : 'bg-slate-800/20 border-slate-700 hover:bg-slate-800/40 hover:border-slate-600'
                                                         }
@@ -205,18 +205,18 @@ export default function AssessmentPage() {
                                                 >
                                                     <div className={`
                                                         w-5 h-5 rounded-full border-2 mr-4 flex items-center justify-center transition-colors
-                                                        ${answers[currentQuestion.id] === option.text
+                                                        ${answers[currentQuestion.id] === option.id
                                                             ? 'border-indigo-500 bg-indigo-500 text-white'
                                                             : 'border-slate-500 group-hover:border-indigo-400'
                                                         }
                                                     `}>
-                                                        {answers[currentQuestion.id] === option.text && <div className="w-2 h-2 rounded-full bg-white" />}
+                                                        {answers[currentQuestion.id] === option.id && <div className="w-2 h-2 rounded-full bg-white" />}
                                                     </div>
                                                     <input
                                                         type="radio"
                                                         name={`question-${currentQuestion.id}`}
-                                                        value={option.text}
-                                                        checked={answers[currentQuestion.id] === option.text}
+                                                        value={option.id}
+                                                        checked={answers[currentQuestion.id] === option.id}
                                                         onChange={(e) => handleAnswer(e.target.value)}
                                                         className="hidden"
                                                     />
