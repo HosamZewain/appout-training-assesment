@@ -20,7 +20,7 @@ export default function HomePage() {
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.2, duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 mb-8"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 mb-8"
                     >
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
@@ -37,7 +37,7 @@ export default function HomePage() {
                     }}>
                         Full-Stack Developer <br /> Training Program
                     </h1>
-                    <p className="text-xl md:text-2xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-xl md:text-2xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
                         Master the modern web stack. Join our elite training program and launch your career as a professional developer.
                     </p>
 
@@ -82,7 +82,7 @@ export default function HomePage() {
                     </div>
 
                     <div className="flex flex-col gap-4 relative z-10">
-                        <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
+                        <div className="flex items-center justify-center gap-2 text-sm text-slate-400">
                             <Clock className="w-4 h-4" />
                             <span>Approx. 20-30 minutes</span>
                         </div>

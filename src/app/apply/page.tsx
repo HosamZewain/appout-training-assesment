@@ -123,10 +123,10 @@ export default function ApplyPage() {
                 className="max-w-2xl mx-auto"
             >
                 <div className="text-center mb-10">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
                         Start Your Journey
                     </h1>
-                    <p className="text-slate-400 text-lg">
+                    <p className="text-slate-500 text-lg">
                         Tell us a bit about yourself. It only takes 2 minutes.
                     </p>
                 </div>
@@ -192,11 +192,11 @@ export default function ApplyPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-1.5">
-                                <label htmlFor="residenceGovernorate" className="block text-sm font-medium text-slate-300 ml-1">
+                                <label htmlFor="residenceGovernorate" className="block text-sm font-medium text-slate-600 ml-1">
                                     Governorate <span className="text-red-400">*</span>
                                 </label>
                                 <div className="relative group">
-                                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-400 transition-colors">
+                                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors">
                                         <MapPin className="w-5 h-5" />
                                     </div>
                                     <select
@@ -204,14 +204,14 @@ export default function ApplyPage() {
                                         name="residenceGovernorate"
                                         value={formData.residenceGovernorate}
                                         onChange={handleChange}
-                                        className={`w-full bg-slate-900/50 backdrop-blur border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-200 appearance-none ${errors.residenceGovernorate ? 'border-red-500/50' : ''}`}
+                                        className={`w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-3 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-200 appearance-none ${errors.residenceGovernorate ? 'border-red-500/50' : ''}`}
                                     >
                                         <option value="">Select Governorate</option>
                                         {egyptGovernates.map(gov => (
-                                            <option key={gov} value={gov} className="bg-slate-900">{gov}</option>
+                                            <option key={gov} value={gov} className="bg-white">{gov}</option>
                                         ))}
                                     </select>
-                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                                         ▼
                                     </div>
                                 </div>
@@ -242,7 +242,7 @@ export default function ApplyPage() {
                         </div>
 
                         <div className="space-y-3 pt-2">
-                            <label className="block text-sm font-medium text-slate-300 ml-1">
+                            <label className="block text-sm font-medium text-slate-600 ml-1">
                                 Can you attend 2 days per week in Tanta, Gharbia? <span className="text-red-400">*</span>
                             </label>
 

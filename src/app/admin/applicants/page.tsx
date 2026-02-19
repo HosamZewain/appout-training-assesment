@@ -78,7 +78,7 @@ export default function ApplicantsListPage() {
             <div className="flex items-center justify-center min-h-[60vh]">
                 <div className="flex flex-col items-center gap-4">
                     <div className="w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin" />
-                    <p className="text-slate-400">Loading applicants...</p>
+                    <p className="text-slate-500">Loading applicants...</p>
                 </div>
             </div>
         );
@@ -91,8 +91,8 @@ export default function ApplicantsListPage() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
-                <h1 className="text-3xl font-bold text-white">Applicants</h1>
-                <p className="text-slate-400 mt-1">Manage and review all training applicants</p>
+                <h1 className="text-3xl font-bold text-slate-800">Applicants</h1>
+                <p className="text-slate-500 mt-1">Manage and review all training applicants</p>
             </motion.div>
 
             {/* Filters */}
@@ -100,7 +100,7 @@ export default function ApplicantsListPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-4 backdrop-blur-xl"
+                className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm"
             >
                 <div className="flex flex-col md:flex-row gap-4">
                     {/* Search */}
@@ -111,7 +111,7 @@ export default function ApplicantsListPage() {
                             placeholder="Search by name, email, or mobile..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full pl-11 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all"
+                            className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all"
                         />
                     </div>
 
@@ -121,7 +121,7 @@ export default function ApplicantsListPage() {
                         <select
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
-                            className="pl-11 pr-10 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all cursor-pointer min-w-[180px]"
+                            className="pl-11 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all cursor-pointer min-w-[180px]"
                         >
                             <option value="">All Statuses</option>
                             <option value="NEW">New</option>
@@ -142,7 +142,7 @@ export default function ApplicantsListPage() {
                 className="flex items-center justify-between"
             >
                 <p className="text-sm text-slate-500">
-                    Showing <span className="text-white font-medium">{applicants.length}</span> applicants
+                    Showing <span className="text-slate-800 font-medium">{applicants.length}</span> applicants
                 </p>
             </motion.div>
 
@@ -151,18 +151,18 @@ export default function ApplicantsListPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl backdrop-blur-xl overflow-hidden"
+                className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden"
             >
                 {applicants.length === 0 ? (
                     <div className="p-12 text-center">
-                        <div className="w-16 h-16 mx-auto mb-4 bg-slate-800 rounded-full flex items-center justify-center">
+                        <div className="w-16 h-16 mx-auto mb-4 bg-slate-100 rounded-full flex items-center justify-center">
                             <User size={32} className="text-slate-600" />
                         </div>
-                        <p className="text-slate-400">No applicants found</p>
+                        <p className="text-slate-500">No applicants found</p>
                         <p className="text-slate-600 text-sm mt-1">Try adjusting your search or filters</p>
                     </div>
                 ) : (
-                    <div className="divide-y divide-slate-800/50">
+                    <div className="divide-y divide-slate-100">
                         {applicants.map((applicant, idx) => {
                             const statusStyle = statusColors[applicant.status] || statusColors.NEW;
                             return (
@@ -174,7 +174,7 @@ export default function ApplicantsListPage() {
                                 >
                                     <Link
                                         href={`/admin/applicants/${applicant.id}`}
-                                        className="flex items-center gap-4 p-4 hover:bg-slate-800/30 transition-colors group"
+                                        className="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors group"
                                     >
                                         {/* Avatar */}
                                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg shrink-0">
@@ -184,7 +184,7 @@ export default function ApplicantsListPage() {
                                         {/* Main Info */}
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-3">
-                                                <h3 className="font-medium text-white group-hover:text-indigo-400 transition-colors truncate">
+                                                <h3 className="font-medium text-slate-800 group-hover:text-indigo-600 transition-colors truncate">
                                                     {applicant.fullName}
                                                 </h3>
                                                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${statusStyle.bg} ${statusStyle.text}`}>
@@ -208,7 +208,7 @@ export default function ApplicantsListPage() {
                                         <div className="shrink-0 w-20 text-center">
                                             {applicant.assessmentAttempt?.isCompleted ? (
                                                 <div className="flex items-center justify-center gap-2">
-                                                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center relative">
+                                                    <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center relative">
                                                         <svg className="w-10 h-10 -rotate-90">
                                                             <circle
                                                                 cx="20"
@@ -217,7 +217,7 @@ export default function ApplicantsListPage() {
                                                                 fill="none"
                                                                 stroke="currentColor"
                                                                 strokeWidth="3"
-                                                                className="text-slate-700"
+                                                                className="text-slate-200"
                                                             />
                                                             <circle
                                                                 cx="20"
@@ -237,7 +237,7 @@ export default function ApplicantsListPage() {
                                                                 }
                                                             />
                                                         </svg>
-                                                        <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+                                                        <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-slate-800">
                                                             {Math.round(applicant.assessmentAttempt.totalScore)}
                                                         </span>
                                                     </div>
@@ -248,7 +248,7 @@ export default function ApplicantsListPage() {
                                         </div>
 
                                         {/* Arrow */}
-                                        <ChevronRight size={20} className="text-slate-600 group-hover:text-indigo-400 transition-colors shrink-0" />
+                                        <ChevronRight size={20} className="text-slate-400 group-hover:text-indigo-600 transition-colors shrink-0" />
                                     </Link>
                                 </motion.div>
                             );

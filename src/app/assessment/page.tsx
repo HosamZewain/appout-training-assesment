@@ -110,10 +110,10 @@ export default function AssessmentPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-950">
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
                 <div className="text-center">
                     <Loader2 className="w-10 h-10 text-indigo-500 animate-spin mx-auto mb-4" />
-                    <p className="text-slate-400">Loading your assessment...</p>
+                    <p className="text-slate-500">Loading your assessment...</p>
                 </div>
             </div>
         );
@@ -121,11 +121,11 @@ export default function AssessmentPage() {
 
     if (error) {
         return (
-            <div className="min-h-screen flex items-center justify-center p-4 bg-slate-950">
+            <div className="min-h-screen flex items-center justify-center p-4 bg-slate-50">
                 <div className="glass-card max-w-md w-full text-center p-8 border-red-500/20">
                     <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-                    <h2 className="text-xl font-bold text-white mb-2">Error</h2>
-                    <p className="text-slate-400 mb-6">{error}</p>
+                    <h2 className="text-xl font-bold text-slate-800 mb-2">Error</h2>
+                    <p className="text-slate-500 mb-6">{error}</p>
                     <Button onClick={() => window.location.reload()}>Try Again</Button>
                 </div>
             </div>
@@ -151,7 +151,7 @@ export default function AssessmentPage() {
                             <p className="text-sm font-medium text-primary">{answeredCount} / {questions.length}</p>
                             <p className="text-xs text-muted-foreground">questions answered</p>
                         </div>
-                        <div className="w-32 h-2 bg-slate-800 rounded-full overflow-hidden">
+                        <div className="w-32 h-2 bg-slate-200 rounded-full overflow-hidden">
                             <motion.div
                                 className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
                                 initial={{ width: 0 }}
@@ -181,10 +181,10 @@ export default function AssessmentPage() {
                                 </div>
 
                                 <div className="mb-8 relative z-10">
-                                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-4 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-4 bg-indigo-500/10 text-indigo-600 border border-indigo-500/20">
                                         {currentQuestion.category}
                                     </span>
-                                    <h2 className="text-xl md:text-2xl font-semibold leading-relaxed text-slate-100">
+                                    <h2 className="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
                                         {currentQuestion.text}
                                     </h2>
                                 </div>
@@ -199,7 +199,7 @@ export default function AssessmentPage() {
                                                         flex items-center p-4 rounded-xl border transition-all duration-200 cursor-pointer group
                                                         ${answers[currentQuestion.id] === option.id
                                                             ? 'bg-indigo-500/10 border-indigo-500 ring-1 ring-indigo-500/50'
-                                                            : 'bg-slate-800/20 border-slate-700 hover:bg-slate-800/40 hover:border-slate-600'
+                                                            : 'bg-slate-50 border-slate-200 hover:bg-slate-100 hover:border-slate-300'
                                                         }
                                                     `}
                                                 >
@@ -207,7 +207,7 @@ export default function AssessmentPage() {
                                                         w-5 h-5 rounded-full border-2 mr-4 flex items-center justify-center transition-colors
                                                         ${answers[currentQuestion.id] === option.id
                                                             ? 'border-indigo-500 bg-indigo-500 text-white'
-                                                            : 'border-slate-500 group-hover:border-indigo-400'
+                                                            : 'border-slate-300 group-hover:border-indigo-400'
                                                         }
                                                     `}>
                                                         {answers[currentQuestion.id] === option.id && <div className="w-2 h-2 rounded-full bg-white" />}
@@ -220,7 +220,7 @@ export default function AssessmentPage() {
                                                         onChange={(e) => handleAnswer(e.target.value)}
                                                         className="hidden"
                                                     />
-                                                    <span className="text-slate-200">{option.text}</span>
+                                                    <span className="text-slate-700">{option.text}</span>
                                                 </label>
                                             ))}
                                         </div>
@@ -229,12 +229,12 @@ export default function AssessmentPage() {
                                             value={answers[currentQuestion.id] || ''}
                                             onChange={(e) => handleAnswer(e.target.value)}
                                             placeholder="Type your answer here..."
-                                            className="w-full h-48 bg-slate-900/50 border border-slate-700 rounded-xl p-4 text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 resize-none transition-all placeholder:text-slate-600"
+                                            className="w-full h-48 bg-white border border-slate-200 rounded-xl p-4 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 resize-none transition-all placeholder:text-slate-400"
                                         />
                                     )}
                                 </div>
 
-                                <div className="flex justify-between items-center mt-10 pt-6 border-t border-white/5 relative z-10">
+                                <div className="flex justify-between items-center mt-10 pt-6 border-t border-slate-200 relative z-10">
                                     <Button
                                         variant="ghost"
                                         onClick={handlePrevious}
@@ -297,7 +297,7 @@ export default function AssessmentPage() {
                                     <span>Answered</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-3 h-3 rounded-full bg-slate-800 border border-slate-700"></div>
+                                    <div className="w-3 h-3 rounded-full bg-slate-200 border border-slate-300"></div>
                                     <span>Not Answered</span>
                                 </div>
                             </div>

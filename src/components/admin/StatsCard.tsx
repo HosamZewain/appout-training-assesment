@@ -16,10 +16,10 @@ interface StatsCardProps {
 
 const variantStyles = {
     default: {
-        bg: 'from-slate-800/50 to-slate-900/50',
-        border: 'border-slate-700/50',
-        iconBg: 'bg-slate-700/50',
-        iconColor: 'text-slate-300',
+        bg: 'from-white to-slate-50',
+        border: 'border-slate-200',
+        iconBg: 'bg-slate-100',
+        iconColor: 'text-slate-500',
     },
     primary: {
         bg: 'from-indigo-500/10 to-purple-500/10',
@@ -60,7 +60,7 @@ export function StatsCard({ title, value, icon, trend, variant = 'default' }: St
                 relative overflow-hidden rounded-2xl p-6
                 bg-gradient-to-br ${styles.bg}
                 border ${styles.border}
-                backdrop-blur-xl
+                shadow-sm
             `}
         >
             {/* Background glow effect */}
@@ -69,7 +69,7 @@ export function StatsCard({ title, value, icon, trend, variant = 'default' }: St
             <div className="relative flex items-start justify-between">
                 <div className="space-y-3">
                     <p className="text-sm font-medium text-slate-400">{title}</p>
-                    <p className="text-3xl font-bold text-white">{value}</p>
+                    <p className="text-3xl font-bold text-slate-800">{value}</p>
 
                     {trend && (
                         <div className={`flex items-center gap-1 text-sm ${trend.isPositive ? 'text-emerald-400' : 'text-red-400'}`}>

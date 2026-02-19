@@ -49,15 +49,15 @@ export default function AdminLoginPage() {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-indigo-500/25">
                     <span className="text-2xl font-bold text-white">A</span>
                 </div>
-                <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
-                <p className="text-slate-400 mt-2">Sign in to access the admin dashboard</p>
+                <h1 className="text-3xl font-bold text-slate-800">Welcome Back</h1>
+                <p className="text-slate-500 mt-2">Sign in to access the admin dashboard</p>
             </motion.div>
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-6 backdrop-blur-xl"
+                className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
             >
                 {error && (
                     <motion.div
@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
-                        <label htmlFor="email" className="text-sm text-slate-400 block mb-2">
+                        <label htmlFor="email" className="text-sm text-slate-600 block mb-2">
                             Email Address
                         </label>
                         <div className="relative">
@@ -82,7 +82,7 @@ export default function AdminLoginPage() {
                                 id="email"
                                 value={formData.email}
                                 onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                                className="w-full pl-11 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all"
+                                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all"
                                 placeholder="admin@appout.com"
                                 required
                             />
@@ -90,7 +90,7 @@ export default function AdminLoginPage() {
                     </div>
 
                     <div>
-                        <label htmlFor="password" className="text-sm text-slate-400 block mb-2">
+                        <label htmlFor="password" className="text-sm text-slate-600 block mb-2">
                             Password
                         </label>
                         <div className="relative">
@@ -100,7 +100,7 @@ export default function AdminLoginPage() {
                                 id="password"
                                 value={formData.password}
                                 onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                                className="w-full pl-11 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all"
+                                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all"
                                 placeholder="••••••••"
                                 required
                             />
@@ -123,7 +123,7 @@ export default function AdminLoginPage() {
                     </button>
                 </form>
 
-                <div className="mt-6 pt-6 border-t border-slate-700/50 text-center">
+                <div className="mt-6 pt-6 border-t border-slate-200 text-center">
                     <p className="text-xs text-slate-500 mb-2">Demo credentials:</p>
                     <p className="text-xs text-slate-400">admin@appout.com / admin123</p>
                 </div>

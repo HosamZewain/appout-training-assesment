@@ -211,7 +211,7 @@ export default function QuestionsPage() {
             <div className="flex items-center justify-center min-h-[60vh]">
                 <div className="flex flex-col items-center gap-4">
                     <div className="w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin" />
-                    <p className="text-slate-400">Loading questions...</p>
+                    <p className="text-slate-500">Loading questions...</p>
                 </div>
             </div>
         );
@@ -237,8 +237,8 @@ export default function QuestionsPage() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-                    <h1 className="text-3xl font-bold text-white">Questions</h1>
-                    <p className="text-slate-400 mt-1">Manage assessment questions across all categories</p>
+                    <h1 className="text-3xl font-bold text-slate-800">Questions</h1>
+                    <p className="text-slate-500 mt-1">Manage assessment questions across all categories</p>
                 </motion.div>
                 <motion.button
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -256,7 +256,7 @@ export default function QuestionsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-4 backdrop-blur-xl"
+                className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm"
             >
                 <div className="flex flex-col md:flex-row gap-4">
                     {/* Search */}
@@ -267,7 +267,7 @@ export default function QuestionsPage() {
                             placeholder="Search questions..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full pl-11 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all"
+                            className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all"
                         />
                     </div>
 
@@ -277,7 +277,7 @@ export default function QuestionsPage() {
                         <select
                             value={categoryFilter}
                             onChange={(e) => setCategoryFilter(e.target.value)}
-                            className="pl-4 pr-10 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all cursor-pointer min-w-[180px]"
+                            className="pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all cursor-pointer min-w-[180px]"
                         >
                             <option value="">All Categories</option>
                             {CATEGORIES.map(cat => (
@@ -295,11 +295,11 @@ export default function QuestionsPage() {
                 transition={{ delay: 0.2 }}
                 className="flex items-center gap-4 text-sm text-slate-500"
             >
-                <span>Showing <span className="text-white font-medium">{filtered.length}</span> questions</span>
+                <span>Showing <span className="text-slate-800 font-medium">{filtered.length}</span> questions</span>
                 <span>•</span>
-                <span>MCQ: <span className="text-white font-medium">{filtered.filter(q => q.type === 'MCQ').length}</span></span>
+                <span>MCQ: <span className="text-slate-800 font-medium">{filtered.filter(q => q.type === 'MCQ').length}</span></span>
                 <span>•</span>
-                <span>Short Answer: <span className="text-white font-medium">{filtered.filter(q => q.type === 'SHORT_ANSWER').length}</span></span>
+                <span>Short Answer: <span className="text-slate-800 font-medium">{filtered.filter(q => q.type === 'SHORT_ANSWER').length}</span></span>
             </motion.div>
 
             {/* Questions List */}
@@ -310,9 +310,9 @@ export default function QuestionsPage() {
                 className="space-y-3"
             >
                 {filtered.length === 0 ? (
-                    <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-12 text-center backdrop-blur-xl">
+                    <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center shadow-sm">
                         <HelpCircle size={48} className="mx-auto mb-4 text-slate-600" />
-                        <p className="text-slate-400">No questions found</p>
+                        <p className="text-slate-500">No questions found</p>
                         <p className="text-slate-600 text-sm mt-1">Try adjusting your filters or add a new question</p>
                     </div>
                 ) : (
@@ -322,7 +322,7 @@ export default function QuestionsPage() {
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.03 * idx }}
-                            className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-5 backdrop-blur-xl hover:border-slate-600/50 transition-all group"
+                            className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-slate-300 transition-all group"
                         >
                             <div className="flex items-start gap-4">
                                 <div className="flex-1 min-w-0">
@@ -334,7 +334,7 @@ export default function QuestionsPage() {
                                         <span className={`px-2.5 py-1 rounded-lg text-xs font-medium border ${difficultyColors[question.difficulty]}`}>
                                             {question.difficulty}
                                         </span>
-                                        <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-400 border border-slate-700">
+                                        <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-500 border border-slate-200">
                                             {question.type === 'MCQ' ? 'Multiple Choice' : 'Short Answer'}
                                         </span>
                                         <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
@@ -343,7 +343,7 @@ export default function QuestionsPage() {
                                     </div>
 
                                     {/* Question Text */}
-                                    <p className="text-white leading-relaxed">{question.text}</p>
+                                    <p className="text-slate-800 leading-relaxed">{question.text}</p>
 
                                     {/* Options Preview */}
                                     {question.type === 'MCQ' && question.options.length > 0 && (
@@ -352,8 +352,8 @@ export default function QuestionsPage() {
                                                 <div
                                                     key={opt.id || opt.orderIndex}
                                                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${opt.isCorrect
-                                                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                                                            : 'bg-slate-800/50 text-slate-400 border border-slate-700/50'
+                                                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                                                        : 'bg-slate-50 text-slate-500 border border-slate-200'
                                                         }`}
                                                 >
                                                     {opt.isCorrect && <CheckCircle2 size={14} />}
@@ -399,15 +399,15 @@ export default function QuestionsPage() {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+                            className="bg-white border border-slate-200 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl"
                             onClick={(e) => e.stopPropagation()}
                         >
                             {/* Modal Header */}
-                            <div className="flex items-center justify-between p-6 border-b border-slate-800">
-                                <h2 className="text-xl font-semibold text-white">
+                            <div className="flex items-center justify-between p-6 border-b border-slate-200">
+                                <h2 className="text-xl font-semibold text-slate-800">
                                     {editingQuestion ? 'Edit Question' : 'Add New Question'}
                                 </h2>
-                                <button onClick={() => setShowModal(false)} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all">
+                                <button onClick={() => setShowModal(false)} className="p-2 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-all">
                                     <X size={20} />
                                 </button>
                             </div>
@@ -417,57 +417,57 @@ export default function QuestionsPage() {
                                 {/* Row: Category, Type, Difficulty, Points */}
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                     <div>
-                                        <label className="text-sm text-slate-400 block mb-1.5">Category</label>
+                                        <label className="text-sm text-slate-600 block mb-1.5">Category</label>
                                         <select
                                             value={formData.category}
                                             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                            className="w-full px-3 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                                            className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                                         >
                                             {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="text-sm text-slate-400 block mb-1.5">Type</label>
+                                        <label className="text-sm text-slate-600 block mb-1.5">Type</label>
                                         <select
                                             value={formData.type}
                                             onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                                            className="w-full px-3 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                                            className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                                         >
                                             {TYPES.map(t => <option key={t} value={t}>{t === 'MCQ' ? 'Multiple Choice' : 'Short Answer'}</option>)}
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="text-sm text-slate-400 block mb-1.5">Difficulty</label>
+                                        <label className="text-sm text-slate-600 block mb-1.5">Difficulty</label>
                                         <select
                                             value={formData.difficulty}
                                             onChange={(e) => setFormData({ ...formData, difficulty: e.target.value })}
-                                            className="w-full px-3 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                                            className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                                         >
                                             {DIFFICULTIES.map(d => <option key={d} value={d}>{d}</option>)}
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="text-sm text-slate-400 block mb-1.5">Points</label>
+                                        <label className="text-sm text-slate-600 block mb-1.5">Points</label>
                                         <input
                                             type="number"
                                             min="1"
                                             max="10"
                                             value={formData.points}
                                             onChange={(e) => setFormData({ ...formData, points: Number(e.target.value) })}
-                                            className="w-full px-3 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                                            className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                                         />
                                     </div>
                                 </div>
 
                                 {/* Question Text */}
                                 <div>
-                                    <label className="text-sm text-slate-400 block mb-1.5">Question Text</label>
+                                    <label className="text-sm text-slate-600 block mb-1.5">Question Text</label>
                                     <textarea
                                         rows={3}
                                         value={formData.text}
                                         onChange={(e) => setFormData({ ...formData, text: e.target.value })}
                                         placeholder="Enter the question text..."
-                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 resize-none"
+                                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 resize-none"
                                     />
                                 </div>
 
@@ -475,7 +475,7 @@ export default function QuestionsPage() {
                                 {formData.type === 'MCQ' && (
                                     <div>
                                         <div className="flex items-center justify-between mb-3">
-                                            <label className="text-sm text-slate-400">Answer Options</label>
+                                            <label className="text-sm text-slate-600">Answer Options</label>
                                             <button
                                                 onClick={addOption}
                                                 className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1"
@@ -489,8 +489,8 @@ export default function QuestionsPage() {
                                                     <button
                                                         onClick={() => updateOption(idx, 'isCorrect', true)}
                                                         className={`shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${opt.isCorrect
-                                                                ? 'border-emerald-500 bg-emerald-500/20'
-                                                                : 'border-slate-600 hover:border-slate-500'
+                                                            ? 'border-emerald-500 bg-emerald-500/20'
+                                                            : 'border-slate-600 hover:border-slate-500'
                                                             }`}
                                                     >
                                                         {opt.isCorrect && <CheckCircle2 size={14} className="text-emerald-400" />}
@@ -500,7 +500,7 @@ export default function QuestionsPage() {
                                                         value={opt.text}
                                                         onChange={(e) => updateOption(idx, 'text', e.target.value)}
                                                         placeholder={`Option ${idx + 1}`}
-                                                        className="flex-1 px-3 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                                                        className="flex-1 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                                                     />
                                                     {formData.options.length > 2 && (
                                                         <button
@@ -519,10 +519,10 @@ export default function QuestionsPage() {
                             </div>
 
                             {/* Modal Footer */}
-                            <div className="flex items-center justify-end gap-3 p-6 border-t border-slate-800">
+                            <div className="flex items-center justify-end gap-3 p-6 border-t border-slate-200">
                                 <button
                                     onClick={() => setShowModal(false)}
-                                    className="px-5 py-2.5 text-slate-400 hover:text-white border border-slate-700 rounded-xl hover:bg-slate-800 transition-all"
+                                    className="px-5 py-2.5 text-slate-500 hover:text-slate-800 border border-slate-200 rounded-xl hover:bg-slate-50 transition-all"
                                 >
                                     Cancel
                                 </button>
@@ -553,20 +553,20 @@ export default function QuestionsPage() {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            className="bg-slate-900 border border-slate-700 rounded-2xl p-6 w-full max-w-md"
+                            className="bg-white border border-slate-200 rounded-2xl p-6 w-full max-w-md shadow-xl"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
                                     <AlertCircle size={20} className="text-red-400" />
                                 </div>
-                                <h3 className="text-lg font-semibold text-white">Delete Question</h3>
+                                <h3 className="text-lg font-semibold text-slate-800">Delete Question</h3>
                             </div>
-                            <p className="text-slate-400 mb-6">Are you sure you want to delete this question? This action cannot be undone and will also remove all associated answers.</p>
+                            <p className="text-slate-500 mb-6">Are you sure you want to delete this question? This action cannot be undone and will also remove all associated answers.</p>
                             <div className="flex justify-end gap-3">
                                 <button
                                     onClick={() => setDeleteId(null)}
-                                    className="px-4 py-2 text-slate-400 hover:text-white border border-slate-700 rounded-xl hover:bg-slate-800 transition-all"
+                                    className="px-4 py-2 text-slate-500 hover:text-slate-800 border border-slate-200 rounded-xl hover:bg-slate-50 transition-all"
                                 >
                                     Cancel
                                 </button>

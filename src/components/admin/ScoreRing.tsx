@@ -48,7 +48,7 @@ export function ScoreRing({ score, maxScore = 100, size = 'md', showLabel = true
                     fill="none"
                     stroke="currentColor"
                     strokeWidth={config.strokeWidth}
-                    className="text-slate-800"
+                    className="text-slate-200"
                 />
 
                 {/* Animated progress circle */}
@@ -72,14 +72,14 @@ export function ScoreRing({ score, maxScore = 100, size = 'md', showLabel = true
 
             {/* Center text */}
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className={`${config.fontSize} font-bold text-white`}>
+                <span className={`${config.fontSize} font-bold text-slate-800`}>
                     {score.toFixed(1)}%
                 </span>
             </div>
 
             {/* Label */}
             {showLabel && label && (
-                <span className="mt-2 text-sm text-slate-400">{label}</span>
+                <span className="mt-2 text-sm text-slate-500">{label}</span>
             )}
         </div>
     );

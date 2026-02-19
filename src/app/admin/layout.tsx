@@ -10,7 +10,7 @@ export default function AdminLayout({
 }) {
     return (
         <SessionProvider>
-            <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
                 <Sidebar />
                 {/* Main content area with margin for sidebar */}
                 <main className="ml-[260px] min-h-screen transition-all duration-200">

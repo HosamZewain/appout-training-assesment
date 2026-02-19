@@ -114,7 +114,7 @@ export default function ApplicantDetailsPage() {
             <div className="flex items-center justify-center min-h-[60vh]">
                 <div className="flex flex-col items-center gap-4">
                     <div className="w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin" />
-                    <p className="text-slate-400">Loading applicant details...</p>
+                    <p className="text-slate-500">Loading applicant details...</p>
                 </div>
             </div>
         );
@@ -124,8 +124,8 @@ export default function ApplicantDetailsPage() {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
                 <div className="text-center">
-                    <h2 className="text-xl font-semibold text-white mb-2">Applicant not found</h2>
-                    <Link href="/admin/applicants" className="text-indigo-400 hover:underline">
+                    <h2 className="text-xl font-semibold text-slate-800 mb-2">Applicant not found</h2>
+                    <Link href="/admin/applicants" className="text-indigo-600 hover:underline">
                         ← Back to list
                     </Link>
                 </div>
@@ -157,13 +157,13 @@ export default function ApplicantDetailsPage() {
                 <div className="flex items-center gap-4">
                     <Link
                         href="/admin/applicants"
-                        className="p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors"
+                        className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors"
                     >
                         <ArrowLeft size={20} className="text-slate-400" />
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-bold text-white">{applicant.fullName}</h1>
-                        <p className="text-slate-400 mt-1">Applicant Details</p>
+                        <h1 className="text-3xl font-bold text-slate-800">{applicant.fullName}</h1>
+                        <p className="text-slate-500 mt-1">Applicant Details</p>
                     </div>
                 </div>
             </motion.div>
@@ -176,35 +176,35 @@ export default function ApplicantDetailsPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-6 backdrop-blur-xl"
+                        className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
                     >
-                        <h2 className="text-lg font-semibold text-white mb-4">Personal Information</h2>
+                        <h2 className="text-lg font-semibold text-slate-800 mb-4">Personal Information</h2>
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-lg bg-slate-800/50">
+                                <div className="p-2 rounded-lg bg-slate-100">
                                     <Mail size={18} className="text-slate-400" />
                                 </div>
                                 <div>
                                     <p className="text-xs text-slate-500">Email</p>
-                                    <p className="text-white">{applicant.email}</p>
+                                    <p className="text-slate-800">{applicant.email}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-lg bg-slate-800/50">
+                                <div className="p-2 rounded-lg bg-slate-100">
                                     <Phone size={18} className="text-slate-400" />
                                 </div>
                                 <div>
                                     <p className="text-xs text-slate-500">Mobile</p>
-                                    <p className="text-white">{applicant.mobile}</p>
+                                    <p className="text-slate-800">{applicant.mobile}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-lg bg-slate-800/50">
+                                <div className="p-2 rounded-lg bg-slate-100">
                                     <MapPin size={18} className="text-slate-400" />
                                 </div>
                                 <div>
                                     <p className="text-xs text-slate-500">Location</p>
-                                    <p className="text-white">{applicant.residenceCity}, {applicant.residenceGovernorate}</p>
+                                    <p className="text-slate-800">{applicant.residenceCity}, {applicant.residenceGovernorate}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
@@ -223,12 +223,12 @@ export default function ApplicantDetailsPage() {
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-lg bg-slate-800/50">
+                                <div className="p-2 rounded-lg bg-slate-100">
                                     <Calendar size={18} className="text-slate-400" />
                                 </div>
                                 <div>
                                     <p className="text-xs text-slate-500">Applied On</p>
-                                    <p className="text-white">{new Date(applicant.createdAt).toLocaleDateString()}</p>
+                                    <p className="text-slate-800">{new Date(applicant.createdAt).toLocaleDateString()}</p>
                                 </div>
                             </div>
                         </div>
@@ -239,9 +239,9 @@ export default function ApplicantDetailsPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-6 backdrop-blur-xl"
+                        className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
                     >
-                        <h2 className="text-lg font-semibold text-white mb-4">Admin Actions</h2>
+                        <h2 className="text-lg font-semibold text-slate-800 mb-4">Admin Actions</h2>
 
                         {/* Status Selector */}
                         <div className="mb-4">
@@ -253,7 +253,7 @@ export default function ApplicantDetailsPage() {
                                         onClick={() => setStatus(opt.value)}
                                         className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${status === opt.value
                                             ? `${opt.color} text-white shadow-lg`
-                                            : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50'
+                                            : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                                             }`}
                                     >
                                         {opt.label}
@@ -270,7 +270,7 @@ export default function ApplicantDetailsPage() {
                                 onChange={(e) => setNotes(e.target.value)}
                                 placeholder="Add notes about this applicant..."
                                 rows={4}
-                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 resize-none"
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 resize-none"
                             />
                         </div>
 
@@ -306,7 +306,7 @@ export default function ApplicantDetailsPage() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3 }}
-                                className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-6 backdrop-blur-xl"
+                                className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
                             >
                                 <div className="flex flex-col md:flex-row items-center gap-8">
                                     <ScoreRing
@@ -315,17 +315,17 @@ export default function ApplicantDetailsPage() {
                                         label="Overall Score"
                                     />
                                     <div className="flex-1 w-full">
-                                        <h2 className="text-lg font-semibold text-white mb-4">Section Breakdown</h2>
+                                        <h2 className="text-lg font-semibold text-slate-800 mb-4">Section Breakdown</h2>
                                         <div className="space-y-3">
                                             {Object.entries(sectionScores).map(([category, scores]: [string, any]) => {
                                                 const percentage = (scores.score / scores.total) * 100;
                                                 return (
                                                     <div key={category}>
                                                         <div className="flex justify-between text-sm mb-1">
-                                                            <span className="text-slate-300">{category}</span>
-                                                            <span className="text-slate-400">{scores.score}/{scores.total}</span>
+                                                            <span className="text-slate-600">{category}</span>
+                                                            <span className="text-slate-500">{scores.score}/{scores.total}</span>
                                                         </div>
-                                                        <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                                        <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                                                             <motion.div
                                                                 initial={{ width: 0 }}
                                                                 animate={{ width: `${percentage}%` }}
@@ -355,11 +355,11 @@ export default function ApplicantDetailsPage() {
                                 {Object.entries(answersByCategory).map(([category, answers]) => (
                                     <div
                                         key={category}
-                                        className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl overflow-hidden backdrop-blur-xl"
+                                        className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm"
                                     >
                                         <button
                                             onClick={() => toggleSection(category)}
-                                            className="w-full flex items-center justify-between p-4 hover:bg-slate-700/20 transition-colors"
+                                            className="w-full flex items-center justify-between p-4 hover:bg-slate-50 transition-colors"
                                         >
                                             <div className="flex items-center gap-3">
                                                 <span className="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm font-medium">
@@ -383,13 +383,13 @@ export default function ApplicantDetailsPage() {
                                                     animate={{ height: 'auto', opacity: 1 }}
                                                     exit={{ height: 0, opacity: 0 }}
                                                     transition={{ duration: 0.2 }}
-                                                    className="border-t border-slate-700/50"
+                                                    className="border-t border-slate-200"
                                                 >
                                                     <div className="p-4 space-y-4">
                                                         {answers.map((answer, idx) => (
-                                                            <div key={idx} className="p-4 bg-slate-800/30 rounded-xl">
+                                                            <div key={idx} className="p-4 bg-slate-50 rounded-xl">
                                                                 <div className="flex justify-between items-start mb-3">
-                                                                    <p className="text-white font-medium">{answer.question.text}</p>
+                                                                    <p className="text-slate-800 font-medium">{answer.question.text}</p>
                                                                     <span className={`ml-4 shrink-0 px-2 py-1 rounded text-xs font-semibold ${answer.isCorrect === true ? 'bg-emerald-500/20 text-emerald-400' :
                                                                         answer.isCorrect === false ? 'bg-red-500/20 text-red-400' :
                                                                             'bg-yellow-500/20 text-yellow-400'
@@ -403,7 +403,7 @@ export default function ApplicantDetailsPage() {
                                                                         {answer.question.options.map((option) => {
                                                                             const isSelected = option.id === answer.selectedOptionId;
                                                                             const isCorrect = option.isCorrect;
-                                                                            let bgClass = 'bg-slate-700/30';
+                                                                            let bgClass = 'bg-slate-100';
                                                                             let borderClass = 'border-transparent';
 
                                                                             if (isSelected && isCorrect) {
@@ -423,7 +423,7 @@ export default function ApplicantDetailsPage() {
                                                                                     className={`p-3 rounded-lg text-sm ${bgClass} border ${borderClass}`}
                                                                                 >
                                                                                     <div className="flex items-center justify-between">
-                                                                                        <span className="text-slate-300">{option.text}</span>
+                                                                                        <span className="text-slate-700">{option.text}</span>
                                                                                         <div className="flex items-center gap-2">
                                                                                             {isSelected && (
                                                                                                 <span className="text-xs text-slate-500">Selected</span>
@@ -438,9 +438,9 @@ export default function ApplicantDetailsPage() {
                                                                         })}
                                                                     </div>
                                                                 ) : (
-                                                                    <div className="p-3 bg-slate-700/30 rounded-lg">
+                                                                    <div className="p-3 bg-slate-50 rounded-lg">
                                                                         <p className="text-xs text-slate-500 mb-1">Answer:</p>
-                                                                        <p className="text-slate-300 whitespace-pre-wrap">
+                                                                        <p className="text-slate-700 whitespace-pre-wrap">
                                                                             {answer.textAnswer || '(No answer provided)'}
                                                                         </p>
                                                                     </div>
@@ -460,12 +460,12 @@ export default function ApplicantDetailsPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
-                            className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-12 backdrop-blur-xl text-center"
+                            className="bg-white border border-slate-200 rounded-2xl p-12 shadow-sm text-center"
                         >
-                            <div className="w-16 h-16 mx-auto mb-4 bg-slate-800 rounded-full flex items-center justify-center">
+                            <div className="w-16 h-16 mx-auto mb-4 bg-slate-100 rounded-full flex items-center justify-center">
                                 <X size={32} className="text-slate-600" />
                             </div>
-                            <p className="text-slate-400">Assessment not completed yet</p>
+                            <p className="text-slate-500">Assessment not completed yet</p>
                             <p className="text-slate-600 text-sm mt-1">The applicant hasn't submitted their assessment</p>
                         </motion.div>
                     )}
