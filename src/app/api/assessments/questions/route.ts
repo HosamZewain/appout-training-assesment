@@ -49,7 +49,13 @@ export async function GET() {
         // Combine and shuffle the final 20 questions
         const finalQuestions = [...selectedMcq, ...selectedShortAnswer].sort(() => Math.random() - 0.5);
 
-        return NextResponse.json(finalQuestions);
+        // Shuffle options for each MCQ so the correct answer isn't always first
+        const shuffledQuestions = finalQuestions.map(q => ({
+            ...q,
+            options: q.options ? [...q.options].sort(() => Math.random() - 0.5) : [],
+        }));
+
+        return NextResponse.json(shuffledQuestions);
     } catch (error) {
         console.error('Error fetching questions:', error);
         return NextResponse.json({ error: 'Failed to fetch questions' }, { status: 500 });

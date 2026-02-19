@@ -87,9 +87,9 @@ export default function AssessmentPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     applicationId,
-                    answers: Object.entries(answers).map(([questionId, answer]) => ({
-                        questionId,
-                        answer
+                    answers: questions.map(q => ({
+                        questionId: q.id,
+                        answer: answers[q.id] || null
                     }))
                 })
             });

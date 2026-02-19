@@ -50,6 +50,10 @@ export async function POST(request: NextRequest) {
                 const selectedOption = question.options.find(o => o.id === selectedOptionId);
                 isCorrect = selectedOption?.isCorrect || false;
                 score = isCorrect ? question.points : 0;
+            } else if (question.type === 'MCQ' && !selectedOptionId) {
+                // Unanswered MCQ — count as incorrect
+                isCorrect = false;
+                score = 0;
             } else if (question.type === 'SHORT_ANSWER') {
                 // Short answers need manual review, score is 0 initially
                 score = 0;
