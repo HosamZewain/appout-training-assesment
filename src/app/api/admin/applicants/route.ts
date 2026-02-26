@@ -14,6 +14,12 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url);
         const search = searchParams.get('search') || '';
         const status = searchParams.get('status') || '';
+        const canAttendTanta = searchParams.get('canAttendTanta');
+        const governorate = searchParams.get('governorate') || '';
+        const city = searchParams.get('city') || '';
+        const assessmentStatus = searchParams.get('assessmentStatus') || '';
+        const minScore = searchParams.get('minScore');
+        const limit = searchParams.get('limit');
 
         const where: any = {};
 
@@ -29,6 +35,40 @@ export async function GET(request: NextRequest) {
             where.status = status;
         }
 
+        if (canAttendTanta === 'true') {
+            where.canAttendTanta = true;
+        } else if (canAttendTanta === 'false') {
+            where.canAttendTanta = false;
+        }
+
+        if (governorate) {
+            where.residenceGovernorate = { contains: governorate, mode: 'insensitive' };
+        }
+
+        if (city) {
+            where.residenceCity = { contains: city, mode: 'insensitive' };
+        }
+
+        if (assessmentStatus === 'completed') {
+            where.assessmentAttempt = { isCompleted: true };
+        } else if (assessmentStatus === 'pending') {
+            where.assessmentAttempt = { isCompleted: false };
+        } else if (assessmentStatus === 'not_started') {
+            where.assessmentAttempt = null;
+        }
+
+        // For minScore, we need to filter on the related assessment
+        if (minScore) {
+            const minScoreNum = parseFloat(minScore);
+            if (!isNaN(minScoreNum)) {
+                where.assessmentAttempt = {
+                    ...where.assessmentAttempt,
+                    isCompleted: true,
+                    totalScore: { gte: minScoreNum },
+                };
+            }
+        }
+
         const applicants = await prisma.application.findMany({
             where,
             include: {
@@ -42,6 +82,7 @@ export async function GET(request: NextRequest) {
             orderBy: {
                 createdAt: 'desc',
             },
+            ...(limit ? { take: parseInt(limit) } : {}),
         });
 
         return NextResponse.json(applicants);
